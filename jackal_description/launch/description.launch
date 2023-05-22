@@ -1,5 +1,6 @@
 <launch>
   <arg name="config" default="base" />
+  <arg name="robot_name" default=""/>
   <!-- fix for oneweek project -->
   <arg name="env_runner" value="$(eval 'env_run' if not optenv('OS', 'unknown').lower().startswith('windows') else 'env_run.bat')" />
   <!-- the following seems to work too when in devel space, but not in install_isolated -->
@@ -10,5 +11,8 @@
                     $(find jackal_description)/urdf/configs/$(arg config)
                     $(find xacro)/xacro $(find jackal_description)/urdf/jackal.urdf.xacro
                     --inorder" />
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
+    <param name="tf_prefix" type="string" value="$(arg robot_name)"/>
+    <param name="use_tf_static" type="bool" value="false" />
+  </node>
 </launch>
