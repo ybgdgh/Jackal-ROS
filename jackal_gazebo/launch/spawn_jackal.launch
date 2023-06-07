@@ -4,11 +4,13 @@
   <arg name="z" default="1" />
   <arg name="yaw" default="0" />
   <arg name="joystick" default="true" />
-  <arg name="robot_name" default="jackal" />
+  <arg name="robot_name" default="" />
 
   <!-- Configuration of Jackal which you would like to simulate.
        See jackal_description for details. -->
-  <arg name="config" default="front_laser" />
+  <arg name="config" default="front_laser"/>
+
+  <!-- <param name="tf_prefix" value="$(arg robot_name)" /> -->
 
   <!-- Load Jackal's description, controllers, and teleop nodes. -->
   <include file="$(find jackal_description)/launch/description.launch">
@@ -16,13 +18,17 @@
     <arg name="robot_name" value="$(arg robot_name)" />
   </include>
   <include file="$(find jackal_control)/launch/control.launch" >
-    <arg name="robot_name" value="$(arg robot_name)" />
+    <arg name="robot_name" value="$(arg robot_name)/" />
   </include>
   <!-- <include file="$(find jackal_control)/launch/teleop.launch">
     <arg name="joystick" value="$(arg joystick)" />
+    <arg name="robot_name" value="$(arg robot_name)" />
   </include> -->
 
   <!-- Spawn Jackal -->
   <node name="spawn_$(arg robot_name)" pkg="gazebo_ros" type="spawn_model"
-	      args="-urdf -model $(arg robot_name) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -R 0 -P 0 -Y $(arg yaw)" />
+	      args="-urdf -model $(arg robot_name) -param robot_description -x $(arg x) -y $(arg y) -z $(arg z) -R 0 -P 0 -Y $(arg yaw)" >
+  </node>
+
+
 </launch>

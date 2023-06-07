@@ -10,9 +10,10 @@
          command="$(find jackal_description)/scripts/$(arg env_runner)
                     $(find jackal_description)/urdf/configs/$(arg config)
                     $(find xacro)/xacro $(find jackal_description)/urdf/jackal.urdf.xacro
-                    --inorder" />
-  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" >
-    <param name="tf_prefix" type="string" value="$(arg robot_name)"/>
+                    'namespace:=$(arg robot_name)'"/>
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
     <param name="use_tf_static" type="bool" value="false" />
+    <param name="tf_prefix" value="$(arg robot_name)"/>
   </node>
+
 </launch>

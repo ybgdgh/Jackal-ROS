@@ -39,10 +39,14 @@
         <arg name="joystick" value="$(arg joystick)" />
         <arg name="robot_name" value="robot_1"/>
       </include>
+      <include file="$(find jackal_navigation)/launch/include/multi_map_move.launch">
+        <arg name="robot_name" value="robot_1"/>
+      </include> 
   </group>
     
     
-  <group ns="/robot_2">
+  <!-- <group ns="/robot_2">
+      <param name="tf_prefix" value="robot_2" />
       <include file="$(find jackal_gazebo)/launch/spawn_jackal.launch">
         <arg name="x" value="1.0" />
         <arg name="y" value="0" />
@@ -52,11 +56,14 @@
         <arg name="joystick" value="$(arg joystick)" />
         <arg name="robot_name" value="robot_2"/>
       </include>
-  </group>
+      <include file="$(find jackal_navigation)/launch/include/multi_map_move.launch">
+        <arg name="namespace" value="robot_2"/>
+      </include> 
+  </group> -->
 
 
   <!-- transformation between robots-->
-  <!-- <node pkg="tf" type="static_transform_publisher" name="robot2_to_robot1" args="1.0 0 0 0 0 0 /robot_1/map /robot_2/map 20" /> -->
+  <node pkg="tf" type="static_transform_publisher" name="robot2_to_robot1" args="1.0 0 0 0 0 0 /robot_1/map /robot_2/map 10" />
 
   <!-- Map megring (know inital position case)-->
   <!-- <group ns="/robot_1/map_merge">
@@ -74,6 +81,8 @@
   <include file="$(find rrt_exploration)/launch/map_merge.launch"/> -->
 
 
+  <!-- 启动rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find jackal_navigation)/rviz/multi.rviz"/>
 
 
 </launch>

@@ -3,14 +3,18 @@
   <arg name="enable_ekf" default="$(optenv ENABLE_EKF true)"/>
   <arg name="robot_name" default=""/>
 
-  <rosparam command="load" file="$(find jackal_control)/config/control.yaml" />
-
+  <!-- subst_value is used to input the robot_name in yaml -->
+  <rosparam command="load" file="$(find jackal_control)/config/control.yaml" subst_value="true"/>
+  
   <node name="controller_spawner" pkg="controller_manager" type="spawner"
         args="jackal_joint_publisher jackal_velocity_controller" />
 
-  <group if="$(arg enable_ekf)" ns="$(arg robot_name)">
+  <group if="$(arg enable_ekf)">
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
       <rosparam command="load" file="$(find jackal_control)/config/robot_localization.yaml" />
+      <param name="odom_frame"      value="$(arg robot_name)odom"/>
+      <param name="base_link_frame" value="$(arg robot_name)base_link"/>
+      <param name="world_frame"     value="$(arg robot_name)odom"/>
     </node>
 
     <group if="$(optenv JACKAL_IMU_MICROSTRAIN 0)">

@@ -436,7 +436,7 @@
         parent_link="front_fender_accessory_link"
         min_angle="${-pi/2}"
         max_angle="${pi/2}"
-        topic="$(optenv JACKAL_FRONT_LASER_TOPIC front/scan)">
+        topic="$(optenv JACKAL_FRONT_LASER_TOPIC $(arg robot_name)/front/scan)">
         <origin xyz="0 0 0" rpy="0 0 0" />
       </xacro:hokuyo_ust10_mount>
     </xacro:if>

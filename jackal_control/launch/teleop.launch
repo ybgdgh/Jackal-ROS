@@ -1,6 +1,7 @@
 <launch>
   <arg name="joy_dev" default="$(optenv JACKAL_JOY_DEVICE /dev/input/ps4)" />
   <arg name="joystick" default="true" />
+  <arg name="robot_name" default=""/>
 
   <group ns="bluetooth_teleop" if="$(arg joystick)">
 
@@ -20,6 +21,6 @@
   </group>
 
   <node pkg="interactive_marker_twist_server" type="marker_server" name="twist_marker_server">
-    <param name="link_name" value="base_link" />
+    <param name="link_name" value="$(arg robot_name)/base_link" />
   </node>
 </launch>

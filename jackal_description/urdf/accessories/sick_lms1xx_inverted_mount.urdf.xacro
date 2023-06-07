@@ -33,7 +33,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
   <xacro:macro name="sick_lms1xx_inverted_mount" params="prefix topic parent_link *origin">
 
-    <xacro:sick_lms1xx frame="${prefix}_laser" topic="${topic}" />
+    <xacro:sick_lms1xx frame="${prefix}_laser" topic="${topic}" robot_namespace="$(arg namespace)" />
 
     <joint name="${prefix}_laser_mount_joint" type="fixed">
       <xacro:insert_block name="origin" />
