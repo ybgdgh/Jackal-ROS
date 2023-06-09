@@ -4,8 +4,8 @@
             <param name="robot_map_topic" value="map"/>
             <param name="robot_namespace" value=""/>
             <param name="merged_map_topic" value="map"/>
-            <param name="world_frame" value="/robot_1/map"/>
-            <param name="known_init_poses" value="true"/>
+            <param name="world_frame" value="map"/>
+            <param name="known_init_poses" value="false"/>
             <param name="merging_rate" value="4.0"/>
             <param name="discovery_rate" value="0.05"/>
             <param name="estimation_rate" value="0.5"/>

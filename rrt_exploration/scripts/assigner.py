@@ -67,12 +67,19 @@ def node():
 	while (len(mapData.data)<1):
 		pass
 
+	# robots=[]
+	# robot_f = robot(namespace)
+	# robots.append(robot_f)
+	# for i in range(0,n_robots):
+	# 	robots[i].sendGoal(robots[i].getPosition())
 	robots=[]
-	robot_f = robot(namespace)
-	robots.append(robot_f)
+	if len(namespace)>0:
+		for i in range(0,n_robots):
+			robots.append(robot(namespace+str(i+namespace_init_count)))
+	elif len(namespace)==0:
+			robots.append(robot(namespace))
 	for i in range(0,n_robots):
 		robots[i].sendGoal(robots[i].getPosition())
-
 
 
 #-------------------------------------------------------------------------

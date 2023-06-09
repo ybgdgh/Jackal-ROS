@@ -79,11 +79,11 @@ def node():
     for i in range(0, n_robots):
         globalmaps.append(OccupancyGrid())
 
-    # if len(namespace) > 0:
-    #     for i in range(0, n_robots):
-    #         rospy.Subscriber(namespace+str(i+namespace_init_count) +
-    #                          global_costmap_topic, OccupancyGrid, globalMap)
-    # elif len(namespace) == 0:
+    if len(namespace) > 0:
+        for i in range(0, n_robots):
+            rospy.Subscriber(namespace+str(i+namespace_init_count) +
+                             global_costmap_topic, OccupancyGrid, globalMap)
+    elif len(namespace) == 0:
         rospy.Subscriber(global_costmap_topic, OccupancyGrid, globalMap)
 # wait if map is not received yet
     while (len(mapData.data) < 1):
@@ -100,13 +100,13 @@ def node():
     global_frame = "/"+mapData.header.frame_id
 
     tfLisn = tf.TransformListener()
-    # if len(namespace) > 0:
-    #     for i in range(0, n_robots):
-    #         tfLisn.waitForTransform(global_frame[1:], namespace+str(
-    #             i+namespace_init_count)+'/'+robot_frame, rospy.Time(0), rospy.Duration(10.0))
-    # elif len(namespace) == 0:
-    tfLisn.waitForTransform(
-        global_frame[1:], robot_frame, rospy.Time(0), rospy.Duration(10.0))
+    if len(namespace) > 0:
+        for i in range(0, n_robots):
+            tfLisn.waitForTransform(global_frame[1:], namespace+str(
+                i+namespace_init_count)+robot_frame, rospy.Time(0), rospy.Duration(10.0))
+    elif len(namespace) == 0:
+        tfLisn.waitForTransform(
+            global_frame[1:], robot_frame, rospy.Time(0), rospy.Duration(10.0))
 
     rospy.Subscriber(goals_topic, PointStamped, callback=callBack,
                      callback_args=[tfLisn, global_frame[1:]])
