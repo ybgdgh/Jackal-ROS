@@ -3,13 +3,12 @@
   <arg name="gui" default="true" />
   <arg name="headless" default="false" />
   <arg name="world_name" default="$(find jackal_gazebo)/worlds/cloister.world" />
-  <arg name="debug" value="false"/>
 
   <!-- Short-term hack to support the original front_laser:=true argument for spawning
        the simulator. This will be removed in favour of using the config:=x arg instead. -->
   <arg name="front_laser" default="true" />
   <arg name="default_config" value="front_laser" if="$(arg front_laser)" />
-  <arg name="default_config" value="base" unless="$(arg front_laser)" />
+  <arg name="default_config" value="front_laser_3d" unless="$(arg front_laser)" />
   <!-- end of hack -->
 
   <!-- Configuration of Jackal which you would like to simulate.
@@ -79,34 +78,32 @@
       </include> 
   </group>
 
-  <!-- transformation between robots-->
-  <node pkg="tf" type="static_transform_publisher" name="robot2_to_robot1" args="4.0 0 0 0 0 0 /robot_1/map /robot_2/map 10" />
-  <node pkg="tf" type="static_transform_publisher" name="robot3_to_robot1" args="-4.0 0 0 0 0 0 /robot_1/map /robot_3/map 10" />
-
   <!-- Map megring (know inital position case)-->
-  <group ns="/robot_1/map_merge">
+  <!-- <group ns="robot_1/map_merge">
     <param name="init_pose_x" value="0.0"/>
     <param name="init_pose_y" value="0.0"/>
     <param name="init_pose_z" value="0.0"/>
     <param name="init_pose_yaw" value="0.0"/>
   </group>
-  <group ns="/robot_2/map_merge">
-    <param name="init_pose_x" value="4.0"/>
+  <group ns="robot_2/map_merge">
+    <param name="init_pose_x" value="-200.0"/>
     <param name="init_pose_y" value="0.0"/>
     <param name="init_pose_z" value="0.0"/>
     <param name="init_pose_yaw" value="0.0"/>
   </group>
   <group ns="/robot_3/map_merge">
-    <param name="init_pose_x" value="-4.0"/>
+    <param name="init_pose_x" value="200.0"/>
     <param name="init_pose_y" value="0.0"/>
     <param name="init_pose_z" value="0.0"/>
     <param name="init_pose_yaw" value="0.0"/>
-  </group>
+  </group> -->
 
 
   <include file="$(find jackal_multi)/launch/map_merge.launch"/>
 
-  <node pkg="tf" type="static_transform_publisher" name="world_to_robot_tf_broadcaster"  args="0 0 0 0 0 0 /map /robot_1/map 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="world_to_robot1_tf_broadcaster"  args="0 0 0 0 0 0 /map /robot_1/map 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="world_to_robot2_tf_broadcaster"  args="4 0 0 0 0 0 /map /robot_2/map 100"/>
+  <node pkg="tf" type="static_transform_publisher" name="world_to_robot3_tf_broadcaster"  args="-4 0 0 0 0 0 /map /robot_3/map 100"/>
   
   <!-- 启动rviz -->
   <node pkg="rviz" type="rviz" name="rviz" args="-d $(find jackal_multi)/rviz/multi.rviz">

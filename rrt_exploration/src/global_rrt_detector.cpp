@@ -74,6 +74,7 @@ int main(int argc, char **argv)
 		ros::spinOnce();
 		ros::Duration(0.1).sleep();
 	}
+	// std::cout << "*********************** receiving map" << std::endl;
 
 	// visualizations  points and lines..
 	points.header.frame_id = mapData.header.frame_id;
@@ -127,6 +128,7 @@ int main(int argc, char **argv)
 			ros::Duration(0.1).sleep();
 		}
 	}
+	// std::cout << "*********************** receiving lookupTransform" << std::endl;
 
 	std::vector<std::vector<float>> V;
 	std::vector<float> xnew;

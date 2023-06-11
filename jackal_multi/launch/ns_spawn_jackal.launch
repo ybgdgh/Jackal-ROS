@@ -10,8 +10,6 @@
        See jackal_description for details. -->
   <arg name="config" default="front_laser"/>
 
- 
-
   <!-- Load Jackal's description, controllers, and teleop nodes. -->
   <include file="$(find jackal_description)/launch/ns_description.launch">
     <arg name="config" value="$(arg config)" />
